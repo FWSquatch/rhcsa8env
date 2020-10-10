@@ -11,9 +11,9 @@
       path: /usr/bin/python
       state: link
   - name: Setting Hostname
-    hostname: name=server2.eight.example.com
+    hostname: name=server2.nypd.gov
   - name: Configuring network
-    shell: nmcli con mod "System eth1" ipv4.addresses 192.168.55.151/24 ipv4.gateway 192.168.55.1 ipv4.dns 8.8.8.8 ipv4.dns-search eight.example.com ipv4.method manual
+    shell: nmcli con mod "System eth1" ipv4.addresses 192.168.55.151/24 ipv4.gateway 192.168.55.1 ipv4.dns 8.8.8.8 ipv4.dns-search nypd.gov ipv4.method manual
   - name: Reloading Network
     service: 
       name: NetworkManager
@@ -21,7 +21,7 @@
   - name: Building Host File
     copy:
       dest: /etc/hosts
-      content: "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4\n:1            localhostlocalhost.localdomain localhost6 localhost6.localdomain6\n192.168.55.149 repo.eight.example.com repo\n192.168.55.150 server1.eight.example.com server1\n192.168.55.151  server2.eight.example.com server2"
+      content: "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4\n:1            localhostlocalhost.localdomain localhost6 localhost6.localdomain6\n192.168.55.149 repo.nypd.gov repo\n192.168.55.150 server1.nypd.gov server1\n192.168.55.151  server2.nypd.gov server2"
       force: yes
   - name: Erasing Repos
     shell: rm -rf /etc/yum.repos.d/*
@@ -39,14 +39,14 @@
     yum: 
       name: man-pages
       state: present
-  - name: Starting services
-    service:
-      name: "{{ item }}"
-      state: started
-      enabled: yes
-    with_items:
-      - firewalld
-      - httpd
+#  - name: Starting services
+#    service:
+#      name: "{{ item }}"
+#      state: started
+#      enabled: yes
+#    with_items:
+#      - firewalld
+#      - httpd
   - name: Erasing Repos
     shell: rm -rf /etc/yum.repos.d/*
     become: yes
@@ -67,18 +67,11 @@
          #!/bin/bash
          #
          echo -e '
-         #          _     _        _        _         _           _          _   _         _       
-         #         / /\  /\ \     /\_\     / /\      /\ \        /\ \       /\_\/\_\ _   /\ \      
-         #        / /  \ \ \ \   / / /    / /  \     \_\ \      /  \ \     / / / / //\_\/  \ \     
-         #       / / /\ \_\ \ \_/ / /    / / /\ \__  /\__ \    / /\ \ \   /\ \/ \ \/ / / /\ \ \    
-         #      / / /\ \___\ \___/ /    / / /\ \___\/ /_ \ \  / / /\ \_\ /  \____\__/ /\/_/\ \ \   
-         #      \ \ \ \/___/\ \ \_/     \ \ \ \/___/ / /\ \ \/ /_/_ \/_// /\/________/     / / /   
-         #       \ \ \       \ \ \       \ \ \    / / /  \/_/ /____/\  / / /\/_// / /     / / /    
-         #   _    \ \ \       \ \ \  _    \ \ \  / / /     / /\____\/ / / /    / / /     / / /  _  
-         #  /_/\__/ / /        \ \ \/_/\__/ / / / / /     / / /______/ / /    / / /     / / /_/\_\ 
-         #  \ \/___/ /          \ \_\ \/___/ / /_/ /     / / /_______\/_/    / / /     / /_____/ / 
-         #   \_____\/            \/_/\_____\/  \_\/      \/__________/       \/_/      \________/  
-         #                                                                                         
+         #     +-----------------------+
+         #     |      NYPD Server2     |
+         #     | Authorized Users Only |
+         #     +-----------------------+
+                                                                                                    
          '"#
          # You are logged into \"`hostname`\" as the \"`whoami`\" account.
          # This system is running `cat /etc/redhat-release`
@@ -86,10 +79,8 @@
          # For root - use \`sudo\` or \`sudo su -\`
          #
          # Repo/AppStream 
-         # Available to use from http://repo.eight.example.com/BaseOS 
-         # and http://repo.eight.example.com/AppStream
-         # 
-         # There are also two additional NICs and drives.
+         # Available to use from http://repo.nypd.gov/BaseOS 
+         # and http://repo.nypd.gov/AppStream
          "
   - name: Adjusting Services and Rebooting
     selinux:

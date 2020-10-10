@@ -10,7 +10,7 @@ config.vm.box_check_update = false
 # Server 2 Configuration
 config.vm.define "server2" do |server2|
   server2.vm.box = "rdbreak/rhel8node"
-#  server2.vm.hostname = "server2.eight.example.com"
+#  server2.vm.hostname = "server2.nypd.gov"
   server2.vm.network "private_network", ip: "192.168.55.151"
   server2.vm.network "private_network", ip: "192.168.55.175"
   server2.vm.network "private_network", ip: "192.168.55.176"
@@ -75,7 +75,7 @@ end
 config.vm.define "server1" do |server1|
   server1.vm.box = "rdbreak/rhel8node"
   server1.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: ".git/"
-#  server1.vm.hostname = "server1.eight.example.com"
+#  server1.vm.hostname = "server1.nypd.gov"
   server1.vm.network "private_network", ip: "192.168.55.150"
   server1.vm.provider :virtualbox do |server1|
     server1.customize ['modifyvm', :id,'--memory', '2048']

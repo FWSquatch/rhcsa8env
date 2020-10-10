@@ -11,9 +11,9 @@
       path: /usr/bin/python
       state: link
   - name: Resetting Hostname
-    hostname: name=server1.eight.example.com
+    hostname: name=server1.nypd.gov
   - name: Resetting network config
-    shell: nmcli con mod "System eth1" ipv4.addresses 192.168.55.150/24 ipv4.gateway 192.168.55.1 ipv4.dns 8.8.8.8 ipv4.dns-search eight.example.com ipv4.method manual
+    shell: nmcli con mod "System eth1" ipv4.addresses 192.168.55.150/24 ipv4.gateway 192.168.55.1 ipv4.dns 8.8.8.8 ipv4.dns-search nypd.gov ipv4.method manual
   - name: Reloading Network
     service: 
       name: NetworkManager
@@ -21,7 +21,7 @@
   - name: Rebuilding Host File
     copy:
       dest: /etc/hosts
-      content: "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4\n:1         localhost localhost.localdomain localhost6 localhost6.localdomain6\n192.168.55.149 repo.eight.example.com repo\n192.168.55.150 server1.eight.example.com server1\n192.168.55.151 server2.eight.example.com server2"
+      content: "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4\n:1         localhost localhost.localdomain localhost6 localhost6.localdomain6\n192.168.55.149 repo.nypd.gov repo\n192.168.55.150 server1.nypd.gov server1\n192.168.55.151 server2.nypd.gov server2"
       force: yes
   - name: Removing Routing 
     sysctl:
@@ -139,8 +139,8 @@
          # For root - use \`sudo\` or \`sudo su -\`
          #
          # Repo/AppStream 
-         # Available to use from http://repo.eight.example.com/BaseOS 
-         # and http://repo.eight.example.com/AppStream
+         # Available to use from http://repo.nypd.gov/BaseOS 
+         # and http://repo.nypd.gov/AppStream
          "
   - name: Adjusting Services and Rebooting
     selinux:
@@ -161,9 +161,9 @@
       path: /usr/bin/python
       state: link
   - name: Setting Hostname
-    hostname: name=server2.eight.example.com
+    hostname: name=server2.nypd.gov
   - name: Resetting network config
-    shell: nmcli con mod "System eth1" ipv4.addresses 192.168.55.151/24 ipv4.gateway 192.168.55.1 ipv4.dns 8.8.8.8 ipv4.dns-search eight.example.com ipv4.method manual
+    shell: nmcli con mod "System eth1" ipv4.addresses 192.168.55.151/24 ipv4.gateway 192.168.55.1 ipv4.dns 8.8.8.8 ipv4.dns-search nypd.gov ipv4.method manual
   - name: Reloading Network
     service: 
       name: NetworkManager
@@ -171,7 +171,7 @@
   - name: Building Host File
     copy:
       dest: /etc/hosts
-      content: "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4\n:1            localhostlocalhost.localdomain localhost6 localhost6.localdomain6\n192.168.55.149 repo.eight.example.com repo\n192.168.55.150 server1.eight.example.com server1\n192.168.55.151  server2.eight.example.com server2"
+      content: "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4\n:1            localhostlocalhost.localdomain localhost6 localhost6.localdomain6\n192.168.55.149 repo.nypd.gov repo\n192.168.55.150 server1.nypd.gov server1\n192.168.55.151  server2.nypd.gov server2"
       force: yes
   - name: Removing Routing 
     sysctl:
@@ -249,7 +249,7 @@
       state: started
       enabled: yes
     with_items:
-      - firewalld
+      #- firewalld
       - httpd
   - name: Erasing Repos
     file:
@@ -292,8 +292,8 @@
          # For root - use \`sudo\` or \`sudo su -\`
          #
          # Repo/AppStream 
-         # Available to use from http://repo.eight.example.com/BaseOS 
-         # and http://repo.eight.example.com/AppStream
+         # Available to use from http://repo.nypd.gov/BaseOS 
+         # and http://repo.nypd.gov/AppStream
          # 
          # There are also two additional NICs.
          "
